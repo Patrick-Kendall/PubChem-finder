@@ -5,6 +5,8 @@ class PubChem {
 
   //calling URL with fetch; fetching title, charge, etc..
   async getChemical(chemical) {
+    chemical = chemical.split(" ").join("%20");
+
     const chemicalResponse = await fetch (`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${chemical}/property/Title,IUPACName,Charge,MolecularFormula,MolecularWeight/JSON`);
 
     const chemical2 = await chemicalResponse.json();
@@ -17,6 +19,7 @@ class PubChem {
 
   //calling URL with fetch; fetching synonyms in "InformationList" array; printing six synonyms
   async getSynonyms(chemical) {
+    chemical = chemical.split(" ").join("%20");
     const synResponse = await fetch (`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${chemical}/synonyms/JSON`);
 
     const synonyms = await synResponse.json();
@@ -57,9 +60,11 @@ class PubChem {
 
   // fetch data on image; utilize URL property in html img tag
   async getImage(chemical) {
+    chemical = chemical.split(" ").join("%20");
     const imageResponse = await fetch (`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${chemical}/PNG`)
 
     const image = await imageResponse;
+
 
     // return response from website in JSON format
     return {

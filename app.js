@@ -9,12 +9,16 @@ const ui = new UI;
 // getting user input from webpage
 const searchUser = document.getElementById('searchUser');
 
-searchUser.addEventListener('keyup', (e) => {
+searchUser.addEventListener('keypress', (e) => {
   // Get input text
   const userText = e.target.value;
 
+  console.log(userText);
+
+  const key = e.code;
+
   // check if input is empty
-  if(userText !== '') {
+  if(key == 'Enter') {
     // get selected properties: IUPAC Name, Title, MW, Mol. Formula
     chemical2.getChemical(userText)
     .then(data => {

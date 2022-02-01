@@ -13,6 +13,7 @@ class UI {
 
   // receive data from fetch; print to webpage
   showProfile(chemical,synonym,description,record) {
+    console.log(chemical);
     // storing data from API path in object properties
     this.title = chemical.PropertyTable.Properties[0].Title;
     this.imageURL = record.url;
