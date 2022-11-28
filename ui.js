@@ -1,56 +1,73 @@
 class UI {
   constructor() {
     this.profile = document.getElementById("profile");
-    this.title = "";
     this.imageURL = "";
-    this.description = "";
-    this.molWeight = "";
-    this.molFormula = "";
-    this.IUPACName = "";
-    this.charge = "";
-    this.synonyms = "";
   }
 
   // receive data from fetch; print to webpage
-  showProfile(chemical,synonym,description,record) {
-    console.log(chemical);
-    // storing data from API path in object properties
-    this.title = chemical.PropertyTable.Properties[0].Title;
-    this.imageURL = record.url;
-    this.description = description.InformationList.Information[1].Description;
-    this.molWeight = chemical.PropertyTable.Properties[0].MolecularWeight;
-    this.molFormula = chemical.PropertyTable.Properties[0].MolecularFormula;
-    this.IUPACName = chemical.PropertyTable.Properties[0].IUPACName;
-    this.charge = chemical.PropertyTable.Properties[0].Charge;
-    
-    // clearing synonym list
-    this.synonyms = "";
-
-    // choosing six synonyms from list fetched from PubChem
-    for(let i = 9; i < 15; i++) {
-      if(i == 14) {
-        this.synonyms += synonym.InformationList.Information[0].Synonym[i];
-      } else {
-      this.synonyms += synonym.InformationList.Information[0].Synonym[i] + ", ";
-      }
-    }
+  showProfile(image) {
+    this.imageURL = image.url;
 
     // printing literal string to an html div
     this.profile.innerHTML = `
-      <div class="col spec-sheet">
-          <h4 class=""> ${this.title}</h4><br>
+      <div class="spec-sheet">
+          <h4 class=""> ${chemData.title}</h4><br>
           <div class="spec-sheet-container">
             <div class="spec-sheet-image">
-              <img src="${this.imageURL}">
+              <img class="chemicalStructure" src="${this.imageURL}">
+              <p class="spec-sheet-CAS">CAS #: ${chemData.CAS}</p>
             </div>
             <div class="spec-sheet-text">
-              <li class="list-group" >Description: <br> ${this.description}</li><br>
-              <li class="list-group">Molecular Weight: ${this.molWeight}
-              </li><br>
+              
+              
+            <h6>Chemical and Physical Properties</h4>
+            <table class="property-table">
+             <tr>
+              <td class="row__header">Boiling Point</td>
+              <td class="row__element">${chemData.BP}</td>
+            </tr>
+            <tr>
+              <td class="row__header">Vapor Pressure</td>
+              <td class="row__element">${chemData.VP}</td>
+            </tr>
+            <tr>
+              <td class="row__header">Density</td>
+              <td class="row__element">${chemData.D}</td>
+            </tr>
+            <tr>
+              <td class="row__header">Molecular Weight</td>
+              <td class="row__element">${chemData.molecularWeight}</td>
+            </tr>
+            <tr>
+              <td class="row__header">Soluble In</td>
+              <td class="row__element">${chemData.solubleCSV}</td>
+            </tr>
+            <tr>
+              <td class="row__header">Flash Point</td>
+              <td class="row__element">${chemData.FP}</td>
+            </tr>
+
+            </table>
             </div> 
           </div>
-          <li class="list-group">Synonyms: <br>${this.synonyms} </li><br>
+          <li class="list-group"><h6>Description:</h6>${chemData.recordDescription} </li><br>
+          <li class="list-group"><h6>Methods of Manufacture:</h6> ${chemData.manufacturing[0]} </li><br>
+          <li class="list-group"> ${chemData.manufacturing[1]}</li><br>
+          <br>
+
+          <h5> Pharmacology: <br>  </h5><br>
+          <li class="list-group"><h6>Mechanism of Action</h6>  ${chemData.mechOfAction[0]} </li><br>
+          <li class="list-group"><h6>Absorption, Distribution, Excretion</h6> <p>${chemData.absorption[0]} </p></li><br>
+
+
         </div>
+    `;
+  }
+
+  showNew() {}
+
+  showChemAndPhysProperties(data) {
+    this.propTable.innerHTML = `
     `;
   }
 }

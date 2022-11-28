@@ -3,6 +3,33 @@ class PubChem {
 
   }
 
+ // return CID in string format
+ async getCID(chemical) {
+  chemical = chemical.split(" ").join("%20");
+
+  const chemicalResponse = await fetch (`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${chemical}/cids/JSON`);
+
+  const response = await chemicalResponse.json();
+
+  const CID = response.IdentifierList.CID[0];
+
+  // return response from website in JSON format
+  return {
+    CID
+  }
+ }
+
+ async getChemName(CID) {
+   const chemicalResponse = await fetch(`https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${CID}/property/Title/JSON`);
+
+   const chemical2 = await chemicalResponse.json();
+
+   return {
+     chemical2
+   }
+ }
+
+
   //calling URL with fetch; fetching title, charge, etc..
   async getChemical(chemical) {
     chemical = chemical.split(" ").join("%20");

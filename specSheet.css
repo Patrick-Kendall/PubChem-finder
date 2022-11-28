@@ -1,11 +1,39 @@
 .spec-sheet-container {
   display: flex;
   flex-direction: row;
-  flex-basis: 2fr 3fr;
+  flex-basis: 3fr 2fr;
   width: 100%;
   margin-bottom: 15px;
 }
 
+.spec-sheet-image {
+  width: 100%;
+  max-width: 300px;
+}
+
 .spec-sheet-text {
-  padding-left: 30px;
+  width: 100%;
+}
+
+.chemicalStructure {
+  width: 90%;
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.property-table, .property-table td {
+  border: 2px solid grey;
+  border-style: ridge;
+  border-collapse: collapse;
+  padding: 4px;
+  font-size: 0.9rem;
+}
+
+.row__element {
+  max-width: 250px;
+}
+
+.list-group {
+  max-width: 550px;
 }

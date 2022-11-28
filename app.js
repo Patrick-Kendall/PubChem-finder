@@ -1,15 +1,22 @@
 // entry point
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // instance of object with methods to fetch from PubChem
-const chemical2 = new PubChem;
+const APIConnect = new PubChem;
+const pubViewConnect = new PubView;
 
 // instance of UI which prints html to div with id = "profile"
 const ui = new UI;
 
+const chemData = new ChemProperties;
+
 // getting user input from webpage
 const searchUser = document.getElementById('searchUser');
 
-searchUser.addEventListener('keypress', (e) => {
+searchUser.addEventListener('keypress', async (e) => {
   // Get input text
   const userText = e.target.value;
 
@@ -19,23 +26,69 @@ searchUser.addEventListener('keypress', (e) => {
 
   // check if input is empty
   if(key == 'Enter') {
-    // get selected properties: IUPAC Name, Title, MW, Mol. Formula
-    chemical2.getChemical(userText)
-    .then(data => {
-      // get description; separate fetch due to structure of PubChem API
-      chemical2.getDescription(data.chemical2.PropertyTable.Properties[0].CID)
-      .then(desc => {
-        // get synonyms; another fetch
-        chemical2.getSynonyms(userText)
-        .then(syn => {
+
+    chemData.clear();
+
+
+    // APIConnect.getChemName(userText)
+    // .then(response =>
+    //   {
+    //     console.log(response.chemical2);
+    //     console.log(chemData.extractName(response.chemical2));
+        
+    //   })
+
+
+    // GET EXPERIMENTAL PROPERTIES FROM NAME OF COMPOUND
+
+    // APIConnect.getCID(userText)
+    // .then(CID =>
+    //   {
+    //     pubViewConnect.getExpProperties(CID.CID)
+    //     .then(data =>
+    //       {
+    //         console.log(data.chemical2);
+    //         chemData.loadProp(data.chemical2.Record.Section[0].Section[0].Section);
+    //         console.log(chemData);
+    //         console.log(chemData.assembleCIDs());
+    //       })
+    //   })
+
+    // GET FULL RECORD FROM PUBVIEW
+    
+    await APIConnect.getCID(userText)
+    .then(CID =>
+      {
+        pubViewConnect.getFullRecord(CID.CID)
+        .then(async data =>
+          {
+            console.log(data.chemical2);
+            chemData.loadTitle(data.chemical2.Record);
+            chemData.loadAll(data.chemical2.Record.Section);
+            try {
+              chemData.loadRecordDescription(data.chemical2.Record.Section[2].Section[0].Information);
+            } catch {
+              chemData.recordDescription = chemData.description[0];
+            }
+
+            await sleep(300);
+            console.log(chemData);
             // get image; another fetch
-            chemical2.getImage(userText)
+            APIConnect.getImage(userText)
             .then(image2 =>  {
-              // show profile with fetched data
-              ui.showProfile(data.chemical2,syn.synonyms,desc.description,image2.image);
+              chemData.assembleSolvents();
+            
+            // show profile with fetched data
+            ui.showProfile(image2.image);
             })
-        })
-      })
-    })
+          })
+      });
+
+
+
+
+
+
+
   }
 })
