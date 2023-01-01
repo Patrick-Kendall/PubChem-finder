@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css" />
     <!-- <link rel="stylesheet" href="bs.css" /> -->
     <link rel="stylesheet" href="specSheet.css" />
-    <title>Encyclopedia of Chemicals</title>
+    <title>Details</title>
   </head>
   <body>
     <nav class="navbar navbar-dark bg-secondary mb-3">
@@ -18,28 +18,9 @@
 
     <div class="container searchContainer">
       <div class="search card card-body">
-        <h3>PubChem Search</h3>
-        <p class="lead">Enter a chemical name to query PubChem</p>
-        <input
-          type="text"
-          id="searchUser"
-          class="form-control"
-          placeholder="Chemical Name"
-        />
-        <br />
-        <div id="profile"></div>
-        <div id="details__heading"></div>
+        <h3 id="details__heading">Details</h3>
         <div id="details__profile"></div>
       </div>
     </div>
-
-    <!-- custom JS *do not change order of scripts -->
-    <script src="model.js"></script>
-    <script src="chemData2.js"></script>
-    <script src="PubView.js"></script>
-    <script src="pubchem.js"></script>
-    <script src="ui.js"></script>
-    <script src="controller.js"></script>
-    <script src="app.js"></script>
   </body>
 </html>

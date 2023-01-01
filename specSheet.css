@@ -1,33 +1,55 @@
 .spec-sheet-container {
   display: flex;
   flex-direction: row;
-  flex-basis: 3fr 2fr;
+
   width: 100%;
   margin-bottom: 15px;
+  justify-content: flex-start;
+  gap: 105px;
+  margin-bottom: 2rem;
 }
 
 .spec-sheet-image {
+  position: relative;
   width: 100%;
-  max-width: 300px;
+  max-width: 24.75rem;
+  max-height: 35rem;
 }
 
 .spec-sheet-text {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  max-width: 400px;
+}
+
+.spec-sheet-CAS {
+  position: absolute;
+  top: 100%;
   width: 100%;
+  text-align: center;
 }
 
 .chemicalStructure {
-  width: 90%;
-  margin-left: auto;
+  width: 100%;
   margin-top: auto;
   margin-bottom: auto;
 }
 
-.property-table, .property-table td {
+.property-table,
+.property-table td {
   border: 2px solid grey;
   border-style: ridge;
   border-collapse: collapse;
   padding: 4px;
-  font-size: 0.9rem;
+  font-size: 0.83rem;
+  font-weight: 400;
+  margin-bottom: 2.5rem;
+}
+
+.property-table {
+  width: 100%;
+  font-size: 0.83rem;
 }
 
 .row__element {
@@ -35,5 +57,70 @@
 }
 
 .list-group {
-  max-width: 550px;
+  max-width: 400px;
+}
+
+.replaced {
+  position: relative;
+}
+
+.replaced[aria-label]:hover::after {
+  content: attr(aria-label);
+  position: absolute;
+  top: 120%;
+  left: -50%;
+  max-width: 350px;
+  min-width: 300px;
+  z-index: 10;
+  border: 1px solid black;
+  background-color: white;
+  padding: 3px;
+}
+
+/* remove gap at certain screen width */
+@media (max-width: 990px) {
+  .spec-sheet-container {
+    gap: 25px;
+  }
+  .spec-sheet-image {
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+  .spec-sheet-text {
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+}
+
+/* change flex direction of image/table and increase table width */
+@media (max-width: 800px) {
+  .spec-sheet-container {
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+  }
+
+  .spec-sheet-text {
+    width: 100%;
+  }
+
+  .property-table td {
+    font-size: 0.9rem;
+  }
+
+  .list-group {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .section-header {
+    display: block;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.6rem 0 0.55rem 0;
+    border-bottom: 1px solid rgb(24, 110, 70);
+    border-top: 1px solid rgb(24, 110, 70);
+  }
 }
